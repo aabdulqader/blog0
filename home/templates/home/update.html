@@ -1,0 +1,33 @@
+{% extends 'home/base.html' %} 
+{% block title %}Update{% endblock title %}
+{% block content %}
+   <p class='text-center my-3'>Dashboard/ Update Post</p>
+    <h4>Your Latest Post</h4>
+    <div class="row">
+        <div class="col-sm-8 my-3">
+            <dib class="jumbotorn jumbotron-fluid">
+                <div class="container jumbo-color py-5">
+                    <h1 class='display-5'><b> {{new_post.0.title}}</b></h1>
+                    <p class='lead justify '>
+                        {{new_post.0.desc}}
+                    </p>
+                </div>
+            </dib>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-warning my-5 py-1 px-5 ">Back</a>
+
+        </div>
+        <div class="col-sm-4">
+            <h4 class = 'text-center alert alert-info mt-3 my-3 p-2 ml-5'>Update Post</h4>
+            <form  class = 'ml-5' action="" method = 'POST'>
+                {% csrf_token %}
+                {{form}}    
+                <button type="submit" class="btn btn-outline-info py-1 px-4 mt-3 float-right">Update</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock content %}

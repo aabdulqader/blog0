@@ -1,0 +1,59 @@
+{% extends 'home/base.html' %} 
+{% block title %}Dashboard{% endblock title %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            <h1 class='text-center my-5'>Dashboard</h1>
+            <a href="{% url 'addpost' %}" class='btn btn-success '>Add Post</a>
+
+            <h3 class = 'text-center alert alert-info my-3 p-2'>Show Post Information</h3>
+            {% if posts %}
+                <table class="table table-hover bg-white">
+                    <thead>
+                        <tr class='text-center '>
+                            <th scope="col">title</th>
+                            <th scope="col">desc</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in posts %}
+                            <tr>
+                                
+                                <td>{{post.title}}</td>
+                                <td >{{post.desc | slice:155}} ... <a href="{% url 'postdetail' post.id %}"><strong>Read more</strong></a></td>
+                                <td class='text-center'> 
+                                    <a href="{% url 'updatepost' post.id %}" class='btn btn-warning btn-sm mb-1'>Edit</a>
+                                    {% if perms.home.delete_post %}
+                                        <form action="{% url 'deletepost' post.id %}" method='POST' class='d-inline'>{% csrf_token %}
+                                            <input type="submit" class='btn btn-danger btn-sm' value="Delete">
+                                        </form>
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            
+            {% else %}
+            <h3 class = 'text-center alert alert-info my-3 p-2'>No Posts</h3>
+            {% endif %}
+            <a href="{% url 'home' %}" class="btn btn-outline-warning my-5 py-1 px-5 ">Back</a>
+        </div>
+        <div class="col-sm-4 my-5  ">
+            <h2 class='my-5 text-center'>{{request.user.username}}
+                {% for group in groups %}
+                    <span class='h6'>__ {{group.name}}</span>
+                {% endfor %}
+            </h2>
+            <div class="container ml-5">
+            <h4>Full Name: {{full_name}}</h4>
+            <p> Email: {{request.user.email}}</p>
+            <p>Joined: {{request.user.date_joined}}</p> 
+            
+                
+            </div>
+        </div> 
+    </div>
+{% endblock content %}

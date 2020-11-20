@@ -1,0 +1,30 @@
+{% extends 'home/base.html' %} 
+{% block title %}Home
+{% endblock title %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8 mt-4">
+        {% for post in posts %}
+            <div class="mt-4">
+                <dib class="jumbotorn jumbotron-fluid my-3">
+                    <div class="container jumbo-color py-5">
+                        <h1 class='display-5'><b> {{post.title}}</b></h1>
+                        <p class='lead justify '>
+                            {{post.desc | slice:350}}... <a href="{% url 'postdetail' post.id %}"><strong>Read more</strong></a> 
+                        </p>
+                    </div>
+                </dib>
+                
+            </div>
+        {% endfor %}
+        </div>
+        <div class="col-sm-4">
+            <h4 class = 'text-center alert alert-info mt-5 my-3 p-2 ml-5'>Add Post</h4>
+            <form  class = 'ml-5' action="" method = 'POST'>
+                {% csrf_token %}
+                {{form}}    
+                <button type="submit" class="btn btn-outline-info py-1 px-4 mt-3 float-right">Add</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
