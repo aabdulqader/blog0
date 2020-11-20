@@ -6,6 +6,7 @@ from .forms import SignUpForm, LoginForm, AddPostForm
 from django.contrib import messages
 from .models import Post, Contact
 from django.contrib.auth.models import Group
+from django.core.cache import cache
 
 
 def postdetail(request, id):
@@ -136,6 +137,7 @@ def dashboard(request):
     groups = user.groups.all()
 
     ip = request.session.get('ip', 0)
+    login_count = cache.get('count', version=user.pk)
 
 
 
@@ -143,7 +145,8 @@ def dashboard(request):
         'posts':posts,
         'full_name':full_name,
         'groups':groups,
-        'ip':ip
+        'ip':ip,
+        'login_count':login_count
     }
     if  request.user.is_authenticated:
         return render (request, 'home/dashboard.html', context)
