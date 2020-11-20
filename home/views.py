@@ -135,12 +135,15 @@ def dashboard(request):
     full_name = user.get_full_name()
     groups = user.groups.all()
 
+    ip = request.session.get('ip', 0)
+
 
 
     context = {
         'posts':posts,
         'full_name':full_name,
-        'groups':groups
+        'groups':groups,
+        'ip':ip
     }
     if  request.user.is_authenticated:
         return render (request, 'home/dashboard.html', context)
